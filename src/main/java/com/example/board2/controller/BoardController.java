@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@RestController()
+@RequestMapping("/v2")
 public class BoardController {
     @Autowired
     JdbcBoardRepository jdbcBoardRepository;
@@ -24,8 +25,9 @@ public class BoardController {
     @Autowired
     BoardService boardService;
 
-    @PostMapping("/board2")
+    @PostMapping("/board")
     public ResponseEntity<String> createContent(@RequestBody Content content) {
+
         try {
             jdbcContentRepository.writeContent(content);
             return new ResponseEntity<>("", HttpStatus.CREATED);
@@ -34,35 +36,30 @@ public class BoardController {
         }
     }
 
-    @PostMapping("/reply2")
+    @PostMapping("/reply")
     public ResponseEntity<String> createReply(@RequestBody Reply reply) {
         try {
             jdbcContentRepository.writeReply(reply);
-            return new ResponseEntity<>("",HttpStatus.CREATED);
+            return new ResponseEntity<>("", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/list-board")
-    public List<Map<String, Object>> showBoardList() {
+    @GetMapping("/boards")
+    public List<Map<String, Object>> boardList() {
         List<Map<String, Object>> list = jdbcBoardRepository.find();
         return list;
     }
 
-    @GetMapping("/list-content")
-    public Content showContent(@RequestParam Integer idx) {
-        return jdbcContentRepository.showContent(idx);
+    @GetMapping("/content/{conetentId}")
+    public Content content(@RequestParam Integer conetentId) {
+        return null;
     }
 
-    @GetMapping("/list-print")
-    public List<Map<String, Object>> contentDetail(@RequestParam Integer idx) {
-        return boardService.getBoardList(idx);
+    @GetMapping("/contents")
+    public List<Content> contentList() {
+        return null;
     }
 
-    @GetMapping("/list2")
-    public List<Map<String, Object>> list() {
-        List<Map<String, Object>> list = jdbcContentRepository.findAll();
-        return list;
-    }
 }

@@ -6,7 +6,6 @@ import java.util.List;
 
 // 게시글 작성 클래스
 public class Content {
-    public List<Reply> replies = new ArrayList<>();
 
     private long userIdx;               // 유저 인덱스
     private long contentIdx;            // 작성 인덱스
@@ -14,6 +13,8 @@ public class Content {
     private String text;                // 내용
     private int viewCount;              // 조회수
     private Date created = new Date();     // 작성 날짜
+
+    public List<Reply> replies = new ArrayList<>();
 
     public Content() {
     }
